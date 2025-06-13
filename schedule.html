@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule an Estimate - Pounds Removal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="index.html" class="logo">Pounds Removal</a>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="schedule.html" class="active">Schedule</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="schedule-form-section">
+            <div class="container">
+                <h2>Book Your Free Estimate</h2>
+                
+                <div class="availability-container">
+                    <h3>Check My Availability</h3>
+                    <div class="date-selector">
+                        <h4>1. Select a Date</h4>
+                        <div id="date-slots" class="slots-container"></div>
+                    </div>
+                    <div class="time-selector">
+                        <h4>2. Select an Available Time</h4>
+                        <div id="time-slots" class="slots-container">
+                             <p>Please select a date first.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="form-intro">3. Fill out your details below to request the chosen time.</p>
+                <form id="quoteForm" class="quote-form">
+                    <input type="hidden" id="selectedDateTime" name="selectedDateTime">
+
+                    <!-- NEW: This is where the selected time will be displayed -->
+                    <div class="form-group">
+                        <label>Your Selected Appointment</label>
+                        <div id="appointment-display" class="selected-appointment-display">
+                            Please select a date and time above.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceType">Service Type</label>
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="">--Please choose an option--</option>
+                            <option value="Household Junk">Household Junk</option>
+                            <option value="Yard Waste">Yard Waste</option>
+                            <option value="Garage Cleanout">Garage Cleanout</option>
+                            <option value="Donation Items">Donation Items</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message (Optional)</label>
+                        <textarea id="message" name="message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2024 Pounds Removal. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/formHandler.js"></script> 
+</body>
+</html>

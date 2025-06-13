@@ -1,0 +1,37 @@
+    # Pounds Removal Dashboard Web App
+    
+    This is a completely self-contained web application for the Pounds Removal junk removal business. It allows customers to schedule estimates and allows the business owner to view and manage those requests.
+    
+    **This application runs entirely in your web browser. No installation, internet connection, or external services are required.**
+    
+    ## How to Run the App
+    
+    1.  **Download the Files:** Make sure you have all the files (`index.html`, `schedule.html`, `dashboard.html`, and the `assets`, `css`, and `js` folders) in the same directory.
+    2.  **Open `index.html`:** Open the `index.html` file in your preferred web browser (like Chrome, Firefox, or Safari).
+    3.  **Navigate:** Use the buttons on the pages to navigate between the Home, Schedule, and Dashboard pages.
+    
+    ## Features
+    
+    * **Home Page:** A welcoming page with business information.
+    * **Scheduling Page:** Customers can fill out a form to request a free estimate, including uploading a photo of their junk.
+    * **Client Dashboard:** View all scheduled appointments. Data is saved in your browser's local storage.
+    * **Admin View:** To access the admin view, add `?admin=true` to the end of the `dashboard.html` URL. (e.g., `file:///.../dashboard.html?admin=true`). This view allows you to mark jobs as "Completed".
+    * **Export Data:** On the dashboard, you can export all appointment data to a JSON file for your records.
+    * **Responsive Design:** The app is designed to work well on desktops, tablets, and mobile phones.
+    
+    ## File Structure
+    
+    ```
+    /pounds-removal-dashboard
+    ├── index.html
+    ├── schedule.html
+    ├── dashboard.html
+    ├── /assets
+    │   ├── hayes-and-dog.jpg
+    │   └── icons/ (placeholder for future icons)
+    ├── /css
+    │   └── styles.css
+    ├── /js
+    │   ├── formHandler.js
+    │   └── dashboardLogic.js
+    └── README.md

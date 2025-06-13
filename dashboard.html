@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pounds Removal</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="main-nav">
+                <a href="index.html" class="logo">Pounds Removal</a>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="schedule.html">Schedule</a></li>
+                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="dashboard-section">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2 id="dashboardTitle">Your Scheduled Appointments</h2>
+                    <button id="exportJson" class="btn">Export as JSON</button>
+                </div>
+
+                <div id="adminControls" class="admin-controls" style="display: none;">
+                    <h3>Admin Controls</h3>
+                    <div class="filters">
+                        <div class="form-group">
+                            <label for="filterDate">Filter by Date</label>
+                            <input type="date" id="filterDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="filterService">Filter by Service</label>
+                            <select id="filterService">
+                                <option value="">All</option>
+                                <option value="Household Junk">Household Junk</option>
+                                <option value="Yard Waste">Yard Waste</option>
+                                <option value="Garage Cleanout">Garage Cleanout</option>
+                                <option value="Donation Items">Donation Items</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+                    </div>
+                </div>
+
+                <div id="appointmentsList" class="appointments-list">
+                    <!-- Appointments will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2024 Pounds Removal. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/dashboardLogic.js"></script>
+</body>
+</html>
