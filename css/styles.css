@@ -37,6 +37,80 @@
         text-decoration: none;
         transition: color 0.3s ease;
     }
+
+/* --- Availability Picker Styles --- */
+.availability-container {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.availability-container h3 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.date-selector, .time-selector {
+    margin-bottom: 1.5rem;
+}
+
+.date-selector h4, .time-selector h4 {
+    font-family: var(--body-font);
+    font-weight: 700;
+    color: var(--dark-text);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.slot-btn {
+    padding: 10px 15px;
+    font-family: var(--body-font);
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    background-color: #fff;
+    color: var(--texas-blue);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.slot-btn:hover {
+    background-color: var(--light-cream);
+    border-color: var(--texas-blue);
+}
+
+.slot-btn.selected {
+    background-color: var(--primary-orange);
+    border-color: var(--primary-orange);
+    color: var(--light-text);
+    font-weight: 700;
+}
+
+.slot-btn:disabled {
+    background-color: #f0f0f0;
+    color: #aaa;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.form-intro {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
     
     a:hover {
         color: var(--texas-blue);
