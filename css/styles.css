@@ -535,3 +535,14 @@
     border: 1px solid var(--texas-blue);
     margin-top: -1rem; /* Pull it closer to the label */
 }
+
+/* --- Style for password input error --- */
+#password-input.input-error {
+    border: 2px solid #e74c3c; /* Red border for error */
+}
+
+/* --- Style for delete confirmation button --- */
+.btn.delete-confirm {
+    background-color: #c0392b; /* A more intense red for confirmation */
+    color: white;
+}
