@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
         startTime: 9,
         endTime: 17,
         slotDuration: 60,
-        daysToShow: 7,
+        daysToShow: 60, // UPDATED: Changed from 7 to 60 for a 2-month window
     };
 
     const dateSlotsContainer = document.getElementById('date-slots');
     const timeSlotsContainer = document.getElementById('time-slots');
     const quoteForm = document.getElementById('quoteForm');
     const selectedDateTimeField = document.getElementById('selectedDateTime');
-    const appointmentDisplay = document.getElementById('appointment-display'); // NEW: Get the display element
+    const appointmentDisplay = document.getElementById('appointment-display'); 
 
     let selectedDate = null;
     let selectedDateText = '';
@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.target.classList.add('selected');
                     
                     selectedDate = e.target.dataset.date;
-                    selectedDateText = dateText; // Store the readable date text
+                    selectedDateText = dateText; 
                     selectedTime = null;
-                    appointmentDisplay.textContent = 'Please select an available time below.'; // Update display
+                    appointmentDisplay.textContent = 'Please select an available time below.'; 
                     generateTimeSlots(selectedDate);
                 });
 
@@ -83,9 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('#time-slots .slot-btn').forEach(btn => btn.classList.remove('selected'));
                 e.target.classList.add('selected');
                 selectedTime = e.target.dataset.time;
-                selectedTimeText = timeText; // Store the readable time text
+                selectedTimeText = timeText;
 
-                // NEW: Update the display with the full selection
                 appointmentDisplay.textContent = `${selectedDateText} at ${selectedTimeText}`;
             });
 
@@ -123,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allAppointments.push(newAppointment);
         localStorage.setItem('appointments', JSON.stringify(allAppointments));
 
-        const preferredDateText = appointmentDisplay.textContent; // Use text from display
+        const preferredDateText = appointmentDisplay.textContent; 
         const recipient = 'hayespounds@gmail.com';
         const subject = `New Quote Request from ${formData.get('fullName')} for ${formData.get('serviceType')}`;
         const body = `
