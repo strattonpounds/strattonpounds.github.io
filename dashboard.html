@@ -11,61 +11,75 @@
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="container">
-            <nav class="main-nav">
-                <a href="index.html" class="logo">Pounds Removal</a>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="schedule.html">Schedule</a></li>
-                    <li><a href="dashboard.html" class="active">Dashboard</a></li>
-                </ul>
-            </nav>
+    <!-- NEW: Password Protection Overlay -->
+    <div id="password-overlay" class="password-protection-overlay">
+        <div class="password-prompt-box">
+            <h3>Admin Access Required</h3>
+            <p>Please enter the password to view the dashboard.</p>
+            <input type="password" id="password-input" placeholder="Password">
+            <button id="password-submit-btn" class="btn btn-primary">Enter</button>
         </div>
-    </header>
+    </div>
 
-    <main>
-        <section class="dashboard-section">
+
+    <!-- The main content is now hidden by default -->
+    <div id="main-content" style="display: none;">
+        <header class="main-header">
             <div class="container">
-                <div class="dashboard-header">
-                    <h2 id="dashboardTitle">Your Scheduled Appointments</h2>
-                    <button id="exportJson" class="btn">Export as JSON</button>
-                </div>
+                <nav class="main-nav">
+                    <a href="index.html" class="logo">Pounds Removal</a>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="schedule.html">Schedule</a></li>
+                        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
-                <div id="adminControls" class="admin-controls" style="display: none;">
-                    <h3>Admin Controls</h3>
-                    <div class="filters">
-                        <div class="form-group">
-                            <label for="filterDate">Filter by Date</label>
-                            <input type="date" id="filterDate">
+        <main>
+            <section class="dashboard-section">
+                <div class="container">
+                    <div class="dashboard-header">
+                        <h2 id="dashboardTitle">Admin Dashboard</h2>
+                        <button id="exportJson" class="btn">Export as JSON</button>
+                    </div>
+
+                    <div id="adminControls" class="admin-controls">
+                        <h3>Admin Controls</h3>
+                        <div class="filters">
+                            <div class="form-group">
+                                <label for="filterDate">Filter by Date</label>
+                                <input type="date" id="filterDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="filterService">Filter by Service</label>
+                                <select id="filterService">
+                                    <option value="">All</option>
+                                    <option value="Household Junk">Household Junk</option>
+                                    <option value="Yard Waste">Yard Waste</option>
+                                    <option value="Garage Cleanout">Garage Cleanout</option>
+                                    <option value="Donation Items">Donation Items</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
                         </div>
-                        <div class="form-group">
-                            <label for="filterService">Filter by Service</label>
-                            <select id="filterService">
-                                <option value="">All</option>
-                                <option value="Household Junk">Household Junk</option>
-                                <option value="Yard Waste">Yard Waste</option>
-                                <option value="Garage Cleanout">Garage Cleanout</option>
-                                <option value="Donation Items">Donation Items</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+                    </div>
+
+                    <div id="appointmentsList" class="appointments-list">
+                        <!-- Appointments will be dynamically inserted here -->
                     </div>
                 </div>
+            </section>
+        </main>
 
-                <div id="appointmentsList" class="appointments-list">
-                    <!-- Appointments will be dynamically inserted here -->
-                </div>
+        <footer class="main-footer">
+            <div class="container">
+                <p>&copy; 2024 Pounds Removal. All Rights Reserved.</p>
             </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2024 Pounds Removal. All Rights Reserved.</p>
-        </div>
-    </footer>
+        </footer>
+    </div>
 
     <script src="js/dashboardLogic.js"></script>
 </body>
