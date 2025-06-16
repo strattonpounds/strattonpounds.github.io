@@ -1,31 +1,40 @@
+// This function will run once the entire HTML document is loaded and ready.
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- PASSWORD PROTECTION LOGIC ---
-    const correctPassword = 'texas'; // CHANGE THIS to your secret password!
-    
+    // --- PASSWORD PROTECTION ELEMENTS ---
     const passwordOverlay = document.getElementById('password-overlay');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmitBtn = document.getElementById('password-submit-btn');
     const mainContent = document.getElementById('main-content');
+    
+    // Set a default password. IMPORTANT: Change this to your own secret password!
+    const correctPassword = 'texas'; 
 
+    // This function checks the entered password.
     const checkPassword = () => {
         if (passwordInput.value === correctPassword) {
-            // Correct password: Hide overlay, show content, and run the app
+            // If correct, hide the password screen and show the main website content.
             passwordOverlay.style.display = 'none';
             mainContent.style.display = 'block';
-            initializeApp(); // This function contains all the original dashboard code
+            // Now that access is granted, run the main dashboard application logic.
+            initializeApp(); 
         } else {
-            // Incorrect password: Flash a red border instead of using alert()
+            // If incorrect, flash the input box red to give visual feedback.
             passwordInput.classList.add('input-error');
+            // Remove the red flash after 1 second.
             setTimeout(() => {
                 passwordInput.classList.remove('input-error');
-            }, 1000); // Remove the error class after 1 second
+            }, 1000);
+            // Clear the incorrect password from the input box.
             passwordInput.value = '';
         }
     };
 
+    // --- EVENT LISTENERS FOR PASSWORD SUBMISSION ---
+    // Trigger the password check when the "Enter" button is clicked.
     passwordSubmitBtn.addEventListener('click', checkPassword);
-    // Also allow pressing Enter to submit
+    
+    // Also trigger the password check if the user presses the 'Enter' key in the input field.
     passwordInput.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
             checkPassword();
@@ -33,14 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     
-    // --- DASHBOARD APP LOGIC ---
-    // All of the original code is now wrapped in this function.
-    // It will only run AFTER the password is correct.
-    const initializeApp = () => {
+    // --- MAIN DASHBOARD APPLICATION LOGIC ---
+    // This function contains all the code to make the dashboard work.
+    // It is ONLY called after the correct password has been entered.
+    function initializeApp() {
 
+        // Get all the necessary elements from the dashboard page.
         const appointmentsList = document.getElementById('appointmentsList');
         const exportJsonBtn = document.getElementById('exportJson');
-        const dashboardTitle = document.getElementById('dashboardTitle');
         const adminControls = document.getElementById('adminControls');
         const filterDate = document.getElementById('filterDate');
         const filterService = document.getElementById('filterService');
@@ -48,22 +57,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let allAppointments = [];
 
+        // Function to load appointments from the browser's local storage.
         const loadAppointments = () => {
             const storedAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
             allAppointments = storedAppointments;
             renderAppointments(allAppointments);
         };
         
+        // Function to display the appointments on the page.
         const renderAppointments = (appointmentsToRender) => {
-            appointmentsList.innerHTML = '';
+            appointmentsList.innerHTML = ''; // Clear the list before re-drawing.
 
             if (appointmentsToRender.length === 0) {
                 appointmentsList.innerHTML = '<p>No appointments scheduled yet. <a href="schedule.html">Book one now!</a></p>';
                 return;
             }
             
+            // Sort appointments to show the newest ones first.
             appointmentsToRender.sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt));
 
+            // Create an HTML card for each appointment.
             appointmentsToRender.forEach(appt => {
                 const card = document.createElement('div');
                 card.className = 'appointment-card';
@@ -95,23 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 appointmentsList.appendChild(card);
             });
             
-            addEventListenersToButtons();
+            addEventListenersToButtons(); // Re-attach event listeners to the new buttons.
         };
 
+        // Function to make the 'Delete' and 'Complete' buttons work.
         const addEventListenersToButtons = () => {
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const btn = e.target;
-                    const id = btn.dataset.id;
                     
-                    // Two-click delete confirmation logic
                     if (btn.classList.contains('delete-confirm')) {
-                        deleteAppointment(id);
+                        // If the button is already in "confirm" state, delete the appointment.
+                        deleteAppointment(btn.dataset.id);
                     } else {
-                        // First click: Change button to confirm state
+                        // On the first click, change the button to a "confirm" state.
                         btn.classList.add('delete-confirm');
                         btn.textContent = 'Confirm Delete?';
-                        // Reset button if not clicked again after 3 seconds
+                        // Set a timeout to revert the button back to normal if not clicked again.
                         setTimeout(() => {
                             if (btn.classList.contains('delete-confirm')) {
                                 btn.classList.remove('delete-confirm');
@@ -124,13 +137,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.querySelectorAll('.complete-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const id = e.target.dataset.id;
-                    toggleAppointmentStatus(id);
+                    toggleAppointmentStatus(e.target.dataset.id);
                 });
             });
         };
 
-        // This function is now only called after confirmation
         const deleteAppointment = (id) => {
             allAppointments = allAppointments.filter(appt => appt.id !== id);
             localStorage.setItem('appointments', JSON.stringify(allAppointments));
@@ -159,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAppointments(filtered);
         };
 
+        // Attach event listeners to the filter controls.
         filterDate.addEventListener('input', applyFilters);
         filterService.addEventListener('change', applyFilters);
         clearFiltersBtn.addEventListener('click', () => {
@@ -167,6 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAppointments(allAppointments);
         });
 
+        // Make the "Export to JSON" button work.
         exportJsonBtn.addEventListener('click', () => {
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allAppointments, null, 2));
             const downloadAnchorNode = document.createElement('a');
@@ -177,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadAnchorNode.remove();
         });
 
+        // Initial load of appointments when the app starts.
         loadAppointments();
-    };
-
+    }
 });
