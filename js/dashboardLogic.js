@@ -15,8 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
             mainContent.style.display = 'block';
             initializeApp(); // This function contains all the original dashboard code
         } else {
-            // Incorrect password
-            alert('Incorrect password. Please try again.');
+            // Incorrect password: Flash a red border instead of using alert()
+            passwordInput.classList.add('input-error');
+            setTimeout(() => {
+                passwordInput.classList.remove('input-error');
+            }, 1000); // Remove the error class after 1 second
             passwordInput.value = '';
         }
     };
@@ -68,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.classList.add('completed');
                 }
                 
-                // Use a readable date format for display
                 const formattedDate = new Date(appt.preferredDate).toLocaleString('en-US', {
                     dateStyle: 'medium',
                     timeStyle: 'short'
@@ -99,8 +101,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const addEventListenersToButtons = () => {
             document.querySelectorAll('.delete-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const id = e.target.dataset.id;
-                    deleteAppointment(id);
+                    const btn = e.target;
+                    const id = btn.dataset.id;
+                    
+                    // Two-click delete confirmation logic
+                    if (btn.classList.contains('delete-confirm')) {
+                        deleteAppointment(id);
+                    } else {
+                        // First click: Change button to confirm state
+                        btn.classList.add('delete-confirm');
+                        btn.textContent = 'Confirm Delete?';
+                        // Reset button if not clicked again after 3 seconds
+                        setTimeout(() => {
+                            if (btn.classList.contains('delete-confirm')) {
+                                btn.classList.remove('delete-confirm');
+                                btn.textContent = 'Delete';
+                            }
+                        }, 3000);
+                    }
                 });
             });
 
@@ -112,12 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
+        // This function is now only called after confirmation
         const deleteAppointment = (id) => {
-            if (confirm('Are you sure you want to delete this appointment?')) {
-                allAppointments = allAppointments.filter(appt => appt.id !== id);
-                localStorage.setItem('appointments', JSON.stringify(allAppointments));
-                applyFilters(); 
-            }
+            allAppointments = allAppointments.filter(appt => appt.id !== id);
+            localStorage.setItem('appointments', JSON.stringify(allAppointments));
+            applyFilters(); 
         };
 
         const toggleAppointmentStatus = (id) => {
@@ -160,11 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
             downloadAnchorNode.remove();
         });
 
-        // Initial Load
         loadAppointments();
-    }; // End of initializeApp function
+    };
 
-});
-
-    loadAppointments();
 });
