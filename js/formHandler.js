@@ -1,17 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- CONFIGURATION ---
-    // This section controls the scheduling logic.
     const config = {
-        // This is the line that defines the workdays.
-        // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-        // As you can see, '1' for Monday is included.
-        workDays: [1, 2, 3, 4, 5], 
-
-        startTime: 9, // 9:00 AM
-        endTime: 17, // 5:00 PM (uses 24-hour format)
-        slotDuration: 60, // in minutes (e.g., 60 for 1-hour slots)
-        daysToShow: 60, // Shows dates for the next 60 days.
+        workDays: [1, 2, 3, 4, 5], // 0=Sun, 1=Mon, 2=Tue...
+        startTime: 9, 
+        endTime: 17, 
+        slotDuration: 60,
+        daysToShow: 60,
     };
 
     // --- Get HTML Elements ---
@@ -41,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
 
-            // This 'if' statement checks if the current day is in the workDays array.
             if (config.workDays.includes(date.getDay())) {
                 const dateBtn = document.createElement('button');
                 dateBtn.classList.add('slot-btn');
@@ -68,11 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateTimeSlots = (dateStr) => {
         timeSlotsContainer.innerHTML = '';
         
-        // THE FIX: Replace hyphens with slashes to avoid UTC timezone issues.
-        // This ensures the date is treated as local time.
-        const day = new Date(dateStr.replace(/-/g, '/')).getDay();
+        // --- THE DEFINITIVE FIX ---
+        // We now parse the date string manually to avoid all timezone issues.
+        // This creates a date object that is guaranteed to be correct.
+        const parts = dateStr.split('-');
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+        const dayOfMonth = parseInt(parts[2], 10);
+        const localDate = new Date(year, month, dayOfMonth);
+        const dayOfWeek = localDate.getDay();
 
-        if (!config.workDays.includes(day)) {
+        if (!config.workDays.includes(dayOfWeek)) {
             timeSlotsContainer.innerHTML = '<p>Sorry, not a working day.</p>';
             return;
         }
@@ -165,3 +165,4 @@ ${formData.get('message') || 'No message provided.'}
     // --- Initialize the Page ---
     generateDateSlots();
 });
+
