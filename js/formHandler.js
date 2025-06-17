@@ -67,7 +67,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const generateTimeSlots = (dateStr) => {
         timeSlotsContainer.innerHTML = '';
-        const day = new Date(dateStr).getDay();
+        
+        // THE FIX: Replace hyphens with slashes to avoid UTC timezone issues.
+        // This ensures the date is treated as local time.
+        const day = new Date(dateStr.replace(/-/g, '/')).getDay();
 
         if (!config.workDays.includes(day)) {
             timeSlotsContainer.innerHTML = '<p>Sorry, not a working day.</p>';
