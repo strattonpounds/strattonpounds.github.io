@@ -1,25 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- CONFIGURATION ---
+    // This section controls the scheduling logic.
     const config = {
-        workDays: [1, 2, 3, 4, 5],
-        startTime: 9,
-        endTime: 17,
-        slotDuration: 60,
-        daysToShow: 60, // UPDATED: Changed from 7 to 60 for a 2-month window
+        // This is the line that defines the workdays.
+        // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+        // As you can see, '1' for Monday is included.
+        workDays: [1, 2, 3, 4, 5], 
+
+        startTime: 9, // 9:00 AM
+        endTime: 17, // 5:00 PM (uses 24-hour format)
+        slotDuration: 60, // in minutes (e.g., 60 for 1-hour slots)
+        daysToShow: 60, // Shows dates for the next 60 days.
     };
 
+    // --- Get HTML Elements ---
     const dateSlotsContainer = document.getElementById('date-slots');
     const timeSlotsContainer = document.getElementById('time-slots');
     const quoteForm = document.getElementById('quoteForm');
     const selectedDateTimeField = document.getElementById('selectedDateTime');
     const appointmentDisplay = document.getElementById('appointment-display'); 
 
+    // --- State Variables ---
     let selectedDate = null;
     let selectedDateText = '';
     let selectedTime = null;
     let selectedTimeText = '';
 
+    // --- Core Functions ---
     const getBookedSlots = () => {
         return JSON.parse(localStorage.getItem('appointments')) || [];
     };
@@ -33,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const date = new Date(today);
             date.setDate(today.getDate() + i);
 
+            // This 'if' statement checks if the current day is in the workDays array.
             if (config.workDays.includes(date.getDay())) {
                 const dateBtn = document.createElement('button');
                 dateBtn.classList.add('slot-btn');
@@ -150,5 +159,6 @@ ${formData.get('message') || 'No message provided.'}
         generateTimeSlots(selectedDate);
     });
 
+    // --- Initialize the Page ---
     generateDateSlots();
 });
